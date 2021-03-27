@@ -101,11 +101,11 @@ def config_ssh():
     with open(r'C:\ProgramData\ssh\sshd_config', 'w') as sshd_config:
         sshd_config.write(filedata)
 
-    print('Config file changed')
+    print('- Config file changed')
 
     restart_ssh()
 
-    print('sshd service restarted')
+    print('- sshd service restarted')
 
 
 def setup_public_key():
@@ -116,24 +116,35 @@ def setup_public_key():
     print(f'- Create folder .ssh for user {getpass.getuser()}\n')
 
     print("Pull public key from master server")
-    ip_master = input("Enter IP-address of master: ")
-    user_master = input("Enter username of master: ")
-    if ip_master == "":
-        print('Enter a IP-address')
-    elif user_master == "":
-        print('Enter a username')
-    else:
-        powershell([f'scp {user_master}@{ip_master}:'
-                    f'/home/{user_master}/.ssh/id_rsa.pub '
-                    f'c:\\users\\{getpass.getuser()}\\.ssh\\uploaded_key'])
-        print('id_rsa.pub copied to uploaded_key')
+
+    while True:
+        ip_master = input("Enter IP-address of master: ")
+        if ip_master == "":
+            print('Enter an IP-address')
+            continue
+        else:
+            break
+    while True:
+        user_master = input("Enter username of master: ")
+        if user_master == "":
+            print('Enter an username')
+            continue
+        else:
+            break
+
+    powershell([f'scp {user_master}@{ip_master}:'
+                f'/home/{user_master}/.ssh/id_rsa.pub '
+                f'c:\\users\\{getpass.getuser()}\\.ssh\\uploaded_key'])
+    print('- id_rsa.pub copied to uploaded_key')
+
+
     if os.path.exists(f'c:\\users\\{getpass.getuser()}\\.ssh\\uploaded_key'):
         powershell([r"Get-Content $env:USERPROFILE\.ssh\uploaded_key | "
                     r"Out-File $env:USERPROFILE\.ssh\authorized_keys -Append "
                     r"-Encoding ascii"])
-        print('Public key master added to authorized_keys file')
+        print('- Public key master added to authorized_keys file')
     else:
-        print('Public key from master is not in folder .ssh')
+        print('- Public key from master is not in folder .ssh')
 
     end()
 
