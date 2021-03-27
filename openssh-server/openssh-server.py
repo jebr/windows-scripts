@@ -79,7 +79,7 @@ def config_ssh():
     dest = r'C:\ProgramData\ssh\sshd_config.bak'
     shutil.copyfile(src, dest)
     # Read sshd_conf
-    with open(f'C:\\users\\{getpass.getuser()}\\desktop\\test.txt', 'r') as sshd_config:
+    with open(r'C:\ProgramData\ssh\sshd_config', 'r') as sshd_config:
         filedata = sshd_config.read()
 
     filedata = filedata.replace('#PubkeyAuthentication yes',
@@ -93,7 +93,7 @@ def config_ssh():
         '#AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys')
 
     # Replace text
-    with open(f'C:\\users\\{getpass.getuser()}\\desktop\\test.txt', 'w') as sshd_config:
+    with open(r'C:\ProgramData\ssh\sshd_config', 'w') as sshd_config:
         sshd_config.write(filedata)
 
     restart_ssh()
