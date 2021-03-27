@@ -8,6 +8,7 @@ import getpass
 import time
 import os
 import shutil
+import socket
 
 parser = argparse.ArgumentParser(description='Python script to install and '
                                              'configure OpenSSH server on '
@@ -52,20 +53,21 @@ def install():
 
 
 def set_service_and_firewall():
-    clear_screen()
     powershell(["Set-Service -Name sshd -StartupType 'Automatic'"])
+    print('- OpenSSH service set to automatic')
     powershell(["Start-Service sshd"])
+    print('- OpenSSH service started')
     powershell(["New-NetFirewallRule -Name sshd -DisplayName "
                 "'OpenSSH Server (sshd)' -Enabled True -Direction "
                 "Inbound -Protocol TCP -Action Allow -LocalPort 22"])
-    clear_screen()
-    print('OpenSSH server installed')
+    print('- OpenSSH firewal rule set')
 
 
 def install_openssh_server():
     powershell(['Add-WindowsCapability -Online -Name '
                 'OpenSSH.Server~~~~0.0.1.0'])
     time.sleep(20)
+    print('- OpenSSH server installed')
     set_service_and_firewall()
 
 
@@ -75,12 +77,11 @@ def show_openssh_server():
 
 
 def config_ssh():
-    clear_screen()
     # backup old sshd_config file
     src = r'C:\ProgramData\ssh\sshd_config'
     dest = r'C:\ProgramData\ssh\sshd_config.bak'
     shutil.copyfile(src, dest)
-    print(r'Backup of c:\programdata\ssh\sshd_config')
+    print(r'- Backup of c:\programdata\ssh\sshd_config.bak')
 
     # Read sshd_conf
     with open(r'C:\ProgramData\ssh\sshd_config', 'r') as sshd_config:
@@ -108,11 +109,11 @@ def config_ssh():
 
 
 def setup_public_key():
-    clear_screen()
     # Create .ssh folder
     powershell(["New-item -Path $env:USERPROFILE -Name .ssh "
                 "-ItemType Directory -force"])
-    print(f'Create folder .ssh for user {getpass.getuser()}\n')
+
+    print(f'- Create folder .ssh for user {getpass.getuser()}\n')
 
     print("Pull public key from master server")
     ip_master = input("Enter IP-address of master: ")
@@ -134,6 +135,8 @@ def setup_public_key():
     else:
         print('Public key from master is not in folder .ssh')
 
+    end()
+
 
 def restart_ssh():
     powershell(["Restart-Service sshd"])
@@ -143,8 +146,9 @@ def clear_screen():
     powershell(["clear"])
 
 def end():
-    print('OpenSSH server installed and configured\nYou are ready to '
-          'test the connection from the master to this computer')
+    print('- OpenSSH server installed and configured\n- You are ready to '
+          'test the connection from the master to this computer\n'
+          f'{getpass.getuser()}@{socket.gethostbyname(socket.gethostname())}')
 
 clear_screen()
 
