@@ -183,6 +183,5 @@ elif args.complete:
     install()
     config_ssh()
     setup_public_key()
-    end()
 else:
     parser.print_help()
