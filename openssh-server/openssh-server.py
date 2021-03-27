@@ -70,14 +70,18 @@ def install_openssh_server():
 
 
 def show_openssh_server():
-    powershell(["Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'"])
+    show = powershell(["Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'"])
+    print(show)
 
 
 def config_ssh():
+    clear_screen()
     # backup old sshd_config file
     src = r'C:\ProgramData\ssh\sshd_config'
     dest = r'C:\ProgramData\ssh\sshd_config.bak'
     shutil.copyfile(src, dest)
+    print(r'Backup of c:\programdata\ssh\sshd_config')
+
     # Read sshd_conf
     with open(r'C:\ProgramData\ssh\sshd_config', 'r') as sshd_config:
         filedata = sshd_config.read()
@@ -96,14 +100,21 @@ def config_ssh():
     with open(r'C:\ProgramData\ssh\sshd_config', 'w') as sshd_config:
         sshd_config.write(filedata)
 
+    print('Config file changed')
+
     restart_ssh()
+
+    print('sshd service restarted')
+
 
 def setup_public_key():
     clear_screen()
     # Create .ssh folder
     powershell(["New-item -Path $env:USERPROFILE -Name .ssh "
                 "-ItemType Directory -force"])
-    print("Get public key from master server")
+    print(f'Create folder .ssh for user {getpass.getuser()}\n')
+
+    print("Pull public key from master server")
     ip_master = input("Enter IP-address of master: ")
     user_master = input("Enter username of master: ")
     if ip_master == "":
@@ -114,10 +125,12 @@ def setup_public_key():
         powershell([f'scp {user_master}@{ip_master}:'
                     f'/home/{user_master}/.ssh/id_rsa.pub '
                     f'c:\\users\\{getpass.getuser()}\\.ssh\\uploaded_key'])
+        print('id_rsa.pub copied to uploaded_key')
     if os.path.exists(f'c:\\users\\{getpass.getuser()}\\.ssh\\uploaded_key'):
         powershell([r"Get-Content $env:USERPROFILE\.ssh\uploaded_key | "
                     r"Out-File $env:USERPROFILE\.ssh\authorized_keys -Append "
                     r"-Encoding ascii"])
+        print('Public key master added to authorized_keys file')
     else:
         print('Public key from master is not in folder .ssh')
 
@@ -129,8 +142,11 @@ def restart_ssh():
 def clear_screen():
     powershell(["clear"])
 
+def end():
+    print('OpenSSH server installed and configured\nYou are ready to '
+          'test the connection from the master to this computer')
 
-# clear_screen()
+clear_screen()
 
 # Optional arguments
 parser.add_argument("--install", help="Install OpenSSH server",
@@ -142,6 +158,8 @@ parser.add_argument("--config", help="Configure OpenSSH server",
 parser.add_argument("--getkey", help="Get public key from master",
                     action="store_true")
 parser.add_argument("--restart", help="Restart OpenSSH server",
+                    action="store_true")
+parser.add_argument("--complete", help="Install and configure OpenSSH server",
                     action="store_true")
 
 
@@ -157,5 +175,10 @@ elif args.getkey:
     setup_public_key()
 elif args.restart:
     restart_ssh()
+elif args.complete:
+    install()
+    config_ssh()
+    setup_public_key()
+    end()
 else:
     parser.print_help()
