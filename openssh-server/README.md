@@ -34,8 +34,13 @@ The following options are available for using the application:
 | --install  | Install OpenSSH server                  |
 | --config   | Configure OpenSSH server                |
 | --getkey   | Get public key from master              |
+| --shell    | Change default shell to Powershell      |
 | --show     | Show info about OpenSSH server          |
 | --restart  | Restart OpenSSH server                  |
+
+> Please note, If you are using the OpenSSH server for Ansible you have to 
+> change the inventory for Windows to ansible_shell_type=powershell when 
+> changing the shell to Powershell
 
 # Download
 [Download link](https://github.com/jebr/windows-scripts/raw/main/openssh-server/openssh-server.exe)
