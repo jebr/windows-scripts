@@ -173,6 +173,7 @@ def restart_ssh():
 def clear_screen():
     powershell(["clear"])
 
+
 def end():
     print('- OpenSSH server installed and configured\n- You are ready to '
           'test the connection from the master to this computer\n'
