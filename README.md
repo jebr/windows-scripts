@@ -29,14 +29,14 @@
 
 A collection of Windows automation scripts.
 
-# Preview
+# Scripts
 
 * ![Install and configure OpenSSH server](/openssh-server)
 
 
 # License
 
-[GNU General Public License version 3](https://raw.githubusercontent.com/jebr/windows-scripts/main/LICENSE)
+[GNU General Public License version 3](https://github.com/jebr/windows-scripts/blob/main/LICENSE)
 
 <hr>
 
