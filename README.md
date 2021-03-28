@@ -25,7 +25,7 @@
   		<img alt="Python version" src="https://img.shields.io/badge/python%20version-3.8-blue">
   	</a>
     <a href="#">
-        <img src="https://img.shields.io/badge/powershell-5.1-orange" alt="Powershell version">
+        <img src="https://img.shields.io/badge/powershell%20version-5.1-orange" alt="Powershell version">
     </a>
 </p>
 <hr>
