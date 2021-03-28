@@ -10,6 +10,7 @@ import os
 import shutil
 import socket
 import ipaddress
+import re
 
 parser = argparse.ArgumentParser(description='Python script to install and '
                                              'configure OpenSSH server on '
