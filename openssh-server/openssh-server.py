@@ -166,6 +166,14 @@ def setup_public_key():
     end()
 
 
+def config_default_shell():
+    powershell([r'New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" '
+                r'-Name DefaultShell -Value '
+                r'"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" '
+                r'-PropertyType String -Force'])
+    print('- Default shell changed to Powershell\n- Remember to change the '
+          'shell type in the Ansible inventory')
+
 def restart_ssh():
     powershell(["Restart-Service sshd"])
 
@@ -190,6 +198,8 @@ parser.add_argument("--config", help="Configure OpenSSH server",
                     action="store_true")
 parser.add_argument("--getkey", help="Get public key from master",
                     action="store_true")
+parser.add_argument("--shell", help="Change default shell to Powershell",
+                    action="store_true")
 parser.add_argument("--show", help="Show info about OpenSSH server",
                     action="store_true")
 parser.add_argument("--restart", help="Restart OpenSSH server",
@@ -211,5 +221,7 @@ elif args.complete:
     install()
     config_ssh()
     setup_public_key()
+elif args.shell:
+    config_default_shell()
 else:
     parser.print_help()
