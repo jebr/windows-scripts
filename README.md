@@ -36,7 +36,7 @@ A collection of Windows automation scripts.
 
 # License
 
-[GNU General Public License version 3](https://raw.githubusercontent.com/jebr/windows-scripts/v1.0/LICENSE)
+[GNU General Public License version 3](https://raw.githubusercontent.com/jebr/windows-scripts/main/LICENSE)
 
 <hr>
 

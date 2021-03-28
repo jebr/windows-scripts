@@ -32,3 +32,24 @@ To use this application follow the steps below.
 4. Start the program
 5. Follow the steps in the program to install and configure the OpenSSH server
 6. Test your SSH connection
+
+# Usage
+
+The following options are available for using the application:
+
+| Option     | Explanation                             |
+|------------|-----------------------------------------|
+| --complete | Install and configure OpenSSH server    |
+| --install  | Install OpenSSH server                  |
+| --config   | Configure OpenSSH server                |
+| --getkey   | Get public key from master              |
+| --show     | Show info about OpenSSH server          |
+| --restart  | Restart OpenSSH server                  |
+
+# License
+
+[GNU General Public License version 3](https://raw.githubusercontent.com/jebr/windows-scripts/main/LICENSE)
+
+<hr>
+
+:star: this project in GitHub if you found this automation scripts helpful.
