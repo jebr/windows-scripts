@@ -9,6 +9,7 @@ import time
 import os
 import shutil
 import socket
+import ipaddress
 
 parser = argparse.ArgumentParser(description='Python script to install and '
                                              'configure OpenSSH server on '
@@ -45,6 +46,19 @@ def powershell(input_: list) -> str:
         print(e)
         # logging.warning(e)
 
+def valid_ip(address):
+    try:
+        ipaddress.ip_address(address)
+        return True
+    except:
+        return False
+
+def valid_username(username):
+    pattern = "^[a-z][a-z0-9_]{0,30}$"
+    if re.match(pattern, username):
+        return True
+    else:
+        return False
 
 def install():
     clear_screen()
@@ -121,14 +135,16 @@ def setup_public_key():
         ip_master = input("Enter IP-address of master: ")
         if ip_master == "":
             print('Enter an IP-address')
-            continue
+        elif not valid_ip(ip_master):
+            print("Enter a valid IP-address")
         else:
             break
     while True:
         user_master = input("Enter username of master: ")
         if user_master == "":
             print('Enter an username')
-            continue
+        elif not valid_username(user_master):
+            print('Enter a valid username')
         else:
             break
 
