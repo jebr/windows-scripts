@@ -20,6 +20,7 @@ parser = argparse.ArgumentParser(description='Python script to install and '
 def escape_cmd(command):
     return command.replace('&', '^&')
 
+
 def powershell(input_: list) -> str:
     """
     Returns a string when no error
@@ -47,6 +48,7 @@ def powershell(input_: list) -> str:
         print(e)
         # logging.warning(e)
 
+
 def valid_ip(address):
     try:
         ipaddress.ip_address(address)
@@ -54,12 +56,14 @@ def valid_ip(address):
     except:
         return False
 
+
 def valid_username(username):
     pattern = "^[a-z][a-z0-9_]{0,30}$"
     if re.match(pattern, username):
         return True
     else:
         return False
+
 
 def install():
     clear_screen()
@@ -174,6 +178,7 @@ def config_default_shell():
     print('- Default shell changed to Powershell\n- Remember to change the '
           'shell type in the Ansible inventory')
 
+
 def restart_ssh():
     powershell(["Restart-Service sshd"])
 
@@ -186,6 +191,7 @@ def end():
     print('- OpenSSH server installed and configured\n- You are ready to '
           'test the connection from the master to this computer\n'
           f'{getpass.getuser()}@{socket.gethostbyname(socket.gethostname())}')
+
 
 clear_screen()
 
