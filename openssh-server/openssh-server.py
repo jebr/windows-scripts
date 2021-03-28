@@ -81,7 +81,7 @@ def set_service_and_firewall():
 def install_openssh_server():
     powershell(['Add-WindowsCapability -Online -Name '
                 'OpenSSH.Server~~~~0.0.1.0'])
-    time.sleep(60)
+    time.sleep(120)
     print('- OpenSSH server installed')
     set_service_and_firewall()
 
