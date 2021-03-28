@@ -182,19 +182,18 @@ def end():
 clear_screen()
 
 # Optional arguments
-parser.add_argument("--install", help="Install OpenSSH server",
+parser.add_argument("--complete", help="Install and configure OpenSSH server",
                     action="store_true")
-parser.add_argument("--show", help="Show info about OpenSSH server",
+parser.add_argument("--install", help="Install OpenSSH server",
                     action="store_true")
 parser.add_argument("--config", help="Configure OpenSSH server",
                     action="store_true")
 parser.add_argument("--getkey", help="Get public key from master",
                     action="store_true")
+parser.add_argument("--show", help="Show info about OpenSSH server",
+                    action="store_true")
 parser.add_argument("--restart", help="Restart OpenSSH server",
                     action="store_true")
-parser.add_argument("--complete", help="Install and configure OpenSSH server",
-                    action="store_true")
-
 
 args = parser.parse_args()
 
