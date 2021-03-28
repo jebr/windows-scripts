@@ -11,10 +11,10 @@
   	<a href="https://github.com/jebr/windows-scripts/issues" target="_blank">
   		<img alt="Issues" src="https://img.shields.io/github/issues/jebr/windows-scripts">
   	</a>
-  	<br>
   	<a href="https://github.com/jebr/windows-scripts/pulls" target="_blank">
   		<img alt="Pull requests" src="https://img.shields.io/github/issues-pr-raw/jebr/windows-scripts">
   	</a>
+  	<br>
   	<a href="https://github.com/jebr/windows-scripts/graphs/contributors" target="_blank">
   		<img alt="Contributers" src="https://img.shields.io/github/contributors/jebr/windows-scripts">
   	</a>
@@ -24,6 +24,9 @@
   	<a href="#">
   		<img alt="Python version" src="https://img.shields.io/badge/python%20version-3.8-blue">
   	</a>
+    <a href="#">
+        <img src="https://img.shields.io/badge/powershell-5.1-orange" alt="Powershell version">
+    </a>
 </p>
 <hr>
 
